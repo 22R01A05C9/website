@@ -94,7 +94,7 @@ def save_url_data():
             return Response("Exists",status=203)
         else:
             data[shorturl]=longurl
-            with open('/home/storedataalsolens/mysite/data','w') as file:
+            with open('data.txt','w') as file:
                 file.write(str(data).replace("'",'"'))
             return Response("Success",status=200)   
 
