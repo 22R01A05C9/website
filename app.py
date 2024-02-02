@@ -106,7 +106,7 @@ def url():
             longurl=request.form['url']
             while(1):
                 shorturl=functions.url_shortner()
-                response=requests.post(url='https://storedataalsolens.pythonanywhere.com/save_data',data={'short':shorturl,'url':longurl})
+                response=requests.post(url='https://saiteja.fun/save_url_data',data={'short':shorturl,'url':longurl})
                 if response.status_code==200:
                     break
             shortnedlink=request.url_root+"url/"+shorturl
@@ -122,7 +122,7 @@ def add_custom():
         try:
             longurl=request.form['url']
             custom=request.form['custom']
-            response=requests.post(url='https://storedataalsolens.pythonanywhere.com/save_data',data={'short':custom,'url':longurl})
+            response=requests.post(url='https://saiteja.fun/save_url_data',data={'short':custom,'url':longurl})
             if response.status_code==200:
                 shortnedlink=request.url_root+"url/"+custom
                 return render_template('urlcustom.html',result=shortnedlink,info="URL Successfully Generated")
@@ -136,7 +136,7 @@ def add_custom():
 @app.route('/url/<shorturl>')
 def redirect_function(shorturl):
     try:
-        response=requests.post(url='https://storedataalsolens.pythonanywhere.com/get_data',data={'short':shorturl})
+        response=requests.post(url='https://saiteja.fun/get_url_data',data={'short':shorturl})
         if response.status_code==200:
             return redirect(str(response.text))
         else:

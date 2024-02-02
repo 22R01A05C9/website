@@ -1,0 +1,7 @@
+www.saiteja.fun {
+    redir https://saiteja.fun{uri}
+}
+
+saiteja.fun {
+    reverse_proxy localhost:8000
+}
