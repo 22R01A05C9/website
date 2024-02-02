@@ -157,7 +157,7 @@ def download():
         if (l[0]=='mp3'):
             endlink=functions.yt_getlinkmp3(url,type=l[-1])
         elif (l[0]=='mp4'):
-            endlink=function.yt_getlinkmp4(url,type=l[-1])
+            endlink=functions.yt_getlinkmp4(url,type=l[-1])
         title=session['title']
         session.pop('title',None)
         return render_template('yt.html',title=title,endlink=endlink)
