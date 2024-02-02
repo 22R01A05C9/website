@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/instagramcss.css')}}">
+    <link rel="icon" href="{{url_for('static',filename='images/instagramlogo.jpg')}}">
+    <title>Instagram Downloader</title>
+</head>
+
+<script>
+    function down(){
+        let link="{{download_link}}";
+        let li1=link.replaceAll("amp;","");
+        window.open(li1)
+    }
+</script>
+
+
+<body>
+    <div class="main">
+        <div class="heading">
+            <a id="head" href="#"><p><strong>Instagram Downloader</strong></p></a>
+        </div>
+        <div class="inp">
+            <form action="/instagram" method="post">
+                <input type="url" placeholder="Paste Link Here" name="url">
+                <button type="submit" id="search"><strong>Search</strong></button>
+            </form>
+        </div>
+        <div class="opt">
+            {% if info %}
+            <p>{{info}}</p>
+            {% endif %}
+            {% if op %}
+            <img src="{{image_url}}">
+            <button id="download" onclick="down()" type="button"><strong>Download Now</strong></button>
+            {% endif %}
+        </div>
+
+    </div>
+</body>
+</html>

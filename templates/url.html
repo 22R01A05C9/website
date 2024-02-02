@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL SHORTENER</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/urlcss.css')}}">
+    <link rel="icon" href="{{url_for('static',filename='images/urllogo.png')}}">
+</head>
+
+<script>
+    function copylink() {
+        const textArea = document.createElement("textarea");
+        textArea.value = "{{result}}";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+            document.execCommand('copy');
+        } catch (err) {
+            console.error('Unable to copy to clipboard', err);
+        }
+        document.body.removeChild(textArea);
+        alert("Copied Link: " + "{{result}}");
+    }
+</script>
+
+<body>
+    <h2>URL SHORTENER</h2>
+    <div class="main">
+        <div class="from">
+            <form action="/url" method="post">
+                <p>Enter Long URL Below</p>
+                <input id="url" type="url" name="url" placeholder="Pate URL Here" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        <p class="info">{{info}} {{link}}</p>
+        {% if result %}
+        <h4>Your Shortened Link is <strong>"{{result}}"</strong></h4>
+        <button type="button" onclick="copylink()" class="copy">Click To Copy</button>
+        {% endif %}
+        {% if not result %}
+        <a href="/url/add-custom-url">Click Here To Add Custom Link</a>
+        {% endif %}
+    </div>
+</body>
+
+</html>

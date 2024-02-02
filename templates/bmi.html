@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="{{url_for('static',filename='images/bmi.png')}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/bmicss.css')}}">
+    <title>BMI Calculator</title>
+</head>
+
+<body>
+    <div class="main">
+        <div class="head">
+            <h2><strong>BMI Calculator</strong></h2>
+        </div>
+        <div class="info">
+            <p><strong>BMI Categories:</strong></p>
+            <p><strong>Underweight = <18.5</strong></p>
+            <p><strong>Normal weight = 18.5-24.9 </strong></p>
+            <p><strong>Overweight = 25-29.9</strong></p>
+            <p><strong>Obesity = BMI of 30 or greater</strong></p>
+        </div>
+        <form action="/bmi" method="post">
+            <div class="input">
+                <div class="height">
+                    <h3>Enter Height</h3>
+                    <div class="feet">
+                        <p><strong>Feet</strong></p>
+                        <input type="number" value="{{feet}}" name="feet" id="feet">
+                    </div>
+                    <div class="inches">
+                        <p><strong>Inches</strong></p>
+                        <input type="number" value="{{inches}}" name="inches" id="inches">
+                    </div>
+                </div>
+                <div class="weight">
+                    <h3>Enter Weight(KG)</h3>
+                    <input type="number" name="weight" value="{{weight}}" id="weight">
+                </div>
+                <div class="button">
+                    <button type="submit">Submit</button>
+                </div>
+            </div>
+        </form>
+        {% if data %}
+        <div class="output">
+            <h3>{{data}}</h3>
+            <h4>{{info}}</h4>
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Custom Link</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/urlcustomcss.css')}}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+</head>
+
+<style>
+    {% if not result %}
+    .info {
+        position: relative;
+        top: 100px;
+        font-size: large;
+        color: #ff1919b8;
+    }
+    {% endif %}
+    {% if result %}
+    .info {
+        position: relative;
+        top: 100px;
+        font-size: large;
+        color: #5fff43;
+    }
+    {% endif %}
+</style>
+
+<script>
+    function copylink() {
+        const textArea = document.createElement("textarea");
+        textArea.value = "{{result}}";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+            document.execCommand('copy');
+        } catch (err) {
+            console.error('Unable to copy to clipboard', err);
+        }
+        document.body.removeChild(textArea);
+        alert("Copied Link: " + "{{result}}");
+    }
+</script>
+
+<body>
+    <h2>Add Custom Link</h2>
+    <div class="main">
+        <div class="from">
+            <form action="/url/add-custom-url" method="post">
+                <p class="longp">Enter Long URL Below</p>
+                <input class="longinput" id="url" type="url" name="url" placeholder="Pate URL Here" required>
+                <p class="customp">Enter A Custom Text</p>
+                <input maxlength="10" class="custominput" id="custom" type="text" name="custom"
+                    placeholder="Enter Custom Text Here" required>
+                <button class="submitb" type="submit">Submit</button>
+            </form>
+        </div>
+        <p class="info"><strong>{{info}}</strong></p>
+        {% if result %}
+        <div class="output">
+            <h4>Your Shortened Link is <strong>{{result}}"</strong></h4>
+            <button type="button" onclick="copylink()" class="copy">Click To Copy</button>
+        </div>
+        {% endif %}
+    </div>
+
+</body>
+
+</html>

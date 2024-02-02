@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&family=Roboto:wght@500&display=swap"
+        rel="stylesheet">
+    <title>SMS BOMBER</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/smscss.css')}}">
+    <link rel="icon" href="{{url_for('static',filename='images/smslogo.jpg')}}">
+</head>
+<script>
+    var i = 0;
+    var max1 = '{{times}}';
+    var time1 = '{{speed}}';
+    var max = Number(max1);
+    var time = Number(time1);
+    function call() {
+        i++;
+        if (i >= max) {
+            document.getElementById("complete").innerHTML = "SMS Sending Completed... ";
+            closeinterval();
+        }
+        document.getElementById("row").innerHTML = "SMS Sent Succcessfully " + i;
+    }
+    const myinterval = setInterval(call, time);
+    function closeinterval() {
+        clearInterval(myinterval);
+    }
+</script>
+
+<body>
+    <div class="main">
+        <div class="heading">
+            <h1>SMS BOMBER</h1>
+        </div>
+        <div class="input">
+            <form action="/sms/sending" method="post">
+                <div class="num">
+                    <label id="ln" for="number">Enter Phone Number</label>
+                    <input maxlength="10" type="text" name="number" id="number">
+
+                </div>
+                <hr>
+                <div class="times">
+                    <label for="times">Enter Times (Max 150)</label>
+                    <input type="number" name="times" id="times">
+                </div>
+                <hr>
+                <div class="speed">
+                    <p><strong>Select Speed</strong></p>
+                    <input type="radio" placeholder="Slow" name="speed" value="Slow" required>
+                    <label for="Slow">Slow</label><br>
+                    <input type="radio" name="speed" value="Medium">
+                    <label for="Medium">Medium</label><br>
+                    <input type="radio" name="speed" value="Fast">
+                    <label for="Fast">Fast</label>
+                </div>
+                <div class="submit">
+                    <button type="submit">Start Sending</button>
+                </div>
+            </form>
+            <div class="output">
+                <h4>{{info}}</h4>
+                {%if number1%}
+                <h3 id="complete" style="color: green;">Sending SMS Started To {{number1}}</h3>
+                <h3 id="row"></h3>
+                {%endif%}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

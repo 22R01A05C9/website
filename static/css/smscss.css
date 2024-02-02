@@ -1,0 +1,105 @@
+
+.heading h1 {
+    text-align: center;
+    margin-bottom: 35px;
+    font-family: 'Kdam Thmor Pro', sans-serif;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-image: linear-gradient(to right, #BFF098, #6FD6FF);
+
+}
+
+.input {
+    text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -45%);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.num input {
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+    margin: 10px;
+    width: 200px;
+    outline: none;
+    font-size: 20px;
+    height: 30px;
+    font-family: 'Kdam Thmor Pro', sans-serif;
+    font-family: 'Roboto', sans-serif;
+}
+
+.times input {
+    background-color: transparent;
+    border: none;
+    padding: 10px;
+    margin: 10px;
+    width: 200px;
+    outline: none;
+    font-size: 18px;
+    height: 30px;
+    font-family: 'Kdam Thmor Pro', sans-serif;
+    font-family: 'Roboto', sans-serif;
+}
+
+.input div label {
+    position: absolute;
+    left: 15px;
+    font-family: 'Kdam Thmor Pro', sans-serif;
+    font-family: 'Roboto', sans-serif;
+}
+
+.input hr {
+    width: 200px;
+    position: relative;
+    transform: translate(-3%, -1100%);
+    height: 2px;
+    background-color: black;
+    border: none;
+}
+
+.input div button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: large;
+    border-radius: 20px;
+    border: none;
+    background-color: black;
+    color: white;
+    font-family: 'Kdam Thmor Pro', sans-serif;
+    font-family: 'Roboto', sans-serif;
+}
+
+.input div button:hover {
+
+    background-color: white;
+    color: black;
+    font-family: 'Kdam Thmor Pro', sans-serif;
+    font-family: 'Roboto', sans-serif;
+}
+
+.output h4 {
+    color: red;
+    font-family: 'Kdam Thmor Pro', sans-serif;
+    font-family: 'Roboto', sans-serif;
+}
+
+.output h3 {
+    color: green;
+    font-family: 'Kdam Thmor Pro', sans-serif;
+    font-family: 'Roboto', sans-serif;
+}
+
+#row {
+    font-family: 'Kdam Thmor Pro', sans-serif;
+    font-family: 'Roboto', sans-serif;
+}

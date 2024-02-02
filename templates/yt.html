@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youtube Downloader</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Kdam+Thmor+Pro&family=Roboto:wght@500&family=Ubuntu&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/ytcss.css')}}">
+    <link rel="icon" href="{{url_for('static',filename='images/ytlogo.png')}}">
+</head>
+{% if endlink %}
+<script>
+    const link='{{endlink}}';
+    const link1=link.replaceAll('amp;','');
+    function down(){
+        console.log(link1);
+        window.open(link1);
+    }
+</script>
+{% endif %}
+<body>
+    <div class="main">
+        <h2>Youtube Downloader</h2>
+        <form id="link" action="/yt/result" method="post">
+            <div class="input">
+                <p>Enter Video URL Below</p>
+                <input type="url" name="link" value="{{link}}" id="link" placeholder="Paste Link Here" required>
+                <button type="submit">Search</button>
+            </div>
+        </form>
+        {% if info %}
+        <h4 class="info">{{info}}</h4>
+        {% endif %}
+        {% if title %}
+        <div class="output">
+            <div class="title">
+                <h3>Title:</h3>
+                <h4>{{title}}</h4>
+            </div>
+            {% if mp3 %}
+            <div class="options">
+                <h3 class="head">Select Quality And Type</h3>
+                <form action="/yt/download" id="opt" method="post">
+                    <select name="opti"required>
+                        <optgroup label="Audio MP3"></optgroup>
+                        {% for i in mp3 %}
+                        <option value="mp3,{{i.replace('kbps','')}}">{{i}}({{mp3[i]}})</option>
+                        {% endfor %}
+                        <optgroup label="Video MP4"></optgroup>
+                        {% for i in mp4 %}
+                        <option value="mp4,{{i}}">{{i}}({{mp4[i]}})</option>
+                        {% endfor %}
+                    </select>
+            </div>
+            {% endif %}
+            <div class="opbutton">
+                {% if not endlink %}
+                <button class="convert" type="submit">Convert</button>
+                {% endif %}
+                </form>
+                {% if endlink %}
+                <button onclick="down()" class="download" type="button">Download {{type}} Now</button>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+</body>
+
+</html>

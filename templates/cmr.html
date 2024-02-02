@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="{{url_for('static',filename='images/cmrlogo.jpeg')}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/cmrcss.css')}}">
+    <title>CMR INSTITUTE OF TECHNOLOGY PROFILE</title>
+</head>
+<body>
+    <div>
+        <h3 class="h3">CMR INSTITUTE OF TECHNOLOGY PROFILE PICTURE</h3><br><br>
+        <form action="/cmr" method="post">
+            <div class="div">
+                <input class="input" type="text" name="roll" placeholder="Enter Roll No." value="{{roll}}"><br><br>
+                <button class="button" type="submit">SUBMIT</button>
+            </div>
+        </form>
+        <br><br>
+        <div class="img">
+            {{info}}
+            {% if url %}
+            <img src="{{url}}" alt="NO ROLLNO FOUND">
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

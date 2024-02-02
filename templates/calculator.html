@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="icon" href="{{url_for('static',filename='images/calculatorlogo.jpg')}}">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/calculatorcss.css')}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+</head>
+
+
+<body>
+    <h3>CALCULATOR</h3>
+    <main>
+        <div class="output">
+            <input id="input" type="text" value="0" name="" id="" placeholder="">
+        </div>
+        <div class="buttons">
+            <button class="button op">AC</button>
+            <button class="button op">DE</button>
+            <button class="button op">%</button>
+            <button class="button op">/</button>
+
+
+            <button class="button">1</button>
+            <button class="button">2</button>
+            <button class="button">3</button>
+            <button class="button op">*</button>
+
+
+            <button class="button">4</button>
+            <button class="button">5</button>
+            <button class="button">6</button>
+            <button class="button op">+</button>
+
+
+            <button class="button">7</button>
+            <button class="button">8</button>
+            <button class="button">9</button>
+            <button class="button op">-</button>
+
+            <button class="button">00</button>
+            <button class="button">0</button>
+            <button class="button">.</button>
+            <button class="button op">=</button>
+
+        </div>
+    </main>
+    <script src="{{url_for('static',filename='/scripts/script.js')}}"></script>
+</body>
+</html>

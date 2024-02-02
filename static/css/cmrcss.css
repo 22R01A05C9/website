@@ -1,0 +1,41 @@
+*{
+    -webkit-user-drag: none;
+    user-select: none;
+}
+
+.input{
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+}
+.div{
+    text-align: center;
+}
+.button{
+    padding: 10px;
+    border-radius: 10px;
+    color: aliceblue;
+    background-color: black;
+}
+.button:hover{
+    color: black;
+    background-color: white;
+}
+.h3{
+    text-align: center;
+}
+.img{
+    text-align: center;
+
+}
+img{
+    height: 360px;
+    width: 360px;
+}
+
+@media (max-device-width:400px){
+    img{
+        height: 300px;
+        width: auto;
+    }
+}
