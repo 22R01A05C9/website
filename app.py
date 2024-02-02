@@ -74,12 +74,12 @@ def url():
             while(1):
                 shorturl=functions.url_shortner()
                 text=""
-                with open('data.txt','r') as file:
+                with open('/home/sai/data/data.txt','r') as file:
                     text=file.read()
                 data=json.loads(text)
                 if shorturl not in data.keys():
                     data[shorturl]=longurl
-                    with open('data.txt','w') as file:
+                    with open('/home/sai/data/data.txt','w') as file:
                         file.write(str(data).replace("'",'"'))
                     break
             shortnedlink=request.url_root+"url/"+shorturl
@@ -96,12 +96,12 @@ def add_custom():
             longurl=request.form['url']
             custom=request.form['custom']
             text=""
-            with open('data.txt','r') as file:
+            with open('/home/sai/data/data.txt','r') as file:
                 text=file.read()
             data=json.loads(text)
             if custom not in data.keys():
                 data[custom]=longurl
-                with open('data.txt','w') as file:
+                with open('/home/sai/data/data.txt','w') as file:
                     file.write(str(data).replace("'",'"'))
                 shortnedlink=request.url_root+"url/"+custom
                 return render_template('urlcustom.html',result=shortnedlink,info="URL Successfully Generated")
@@ -116,7 +116,7 @@ def add_custom():
 def redirect_function(shorturl):
     try:
         text=""
-        with open('data.txt','r') as file:
+        with open('/home/sai/data/data.txt','r') as file:
             text=file.read()
         data=json.loads(text)
         if shorturl in data.keys():
