@@ -64,40 +64,7 @@ def instagram():
             return render_template('instagram.html',info="Video Not Available")
     else:
         return render_template('instagram.html')
-
-
-
-@app.route('/get_url_data',methods=['POST'])
-def get_url_data():
-    if request.method=='POST':
-        shorturl=request.form['short']
-        text=""
-        with open('data.txt','r') as file:
-            text=file.read()
-        data=json.loads(text)
-        if shorturl in data.keys():
-            return Response(data[shorturl],status=200)
-        else:
-            return Response("No Data",status=203)
     
-
-@app.route('/save_url_data',methods=['POST'])
-def save_url_data():
-    if request.method=='POST':
-        longurl=request.form['url']
-        shorturl=request.form['short']
-        text=""
-        with open('data.txt','r') as file:
-            text=file.read()
-        data=json.loads(text)
-        if shorturl in data.keys():
-            return Response("Exists",status=203)
-        else:
-            data[shorturl]=longurl
-            with open('data.txt','w') as file:
-                file.write(str(data).replace("'",'"'))
-            return Response("Success",status=200)   
-
 
 @app.route('/url', methods=["POST", "GET"])
 def url():
@@ -106,8 +73,14 @@ def url():
             longurl=request.form['url']
             while(1):
                 shorturl=functions.url_shortner()
-                response=requests.post(url='https://saiteja.fun/save_url_data',data={'short':shorturl,'url':longurl})
-                if response.status_code==200:
+                text=""
+                with open('data.txt','r') as file:
+                    text=file.read()
+                data=json.loads(text)
+                if shorturl not in data.keys():
+                    data[shorturl]=longurl
+                    with open('data.txt','w') as file:
+                        file.write(str(data).replace("'",'"'))
                     break
             shortnedlink=request.url_root+"url/"+shorturl
             return render_template('url.html',result=shortnedlink,info="URL Successfully Generated")
@@ -122,11 +95,17 @@ def add_custom():
         try:
             longurl=request.form['url']
             custom=request.form['custom']
-            response=requests.post(url='https://saiteja.fun/save_url_data',data={'short':custom,'url':longurl})
-            if response.status_code==200:
+            text=""
+            with open('data.txt','r') as file:
+                text=file.read()
+            data=json.loads(text)
+            if custom not in data.keys():
+                data[custom]=longurl
+                with open('data.txt','w') as file:
+                    file.write(str(data).replace("'",'"'))
                 shortnedlink=request.url_root+"url/"+custom
                 return render_template('urlcustom.html',result=shortnedlink,info="URL Successfully Generated")
-            elif response.status_code==203:
+            else:
                 return render_template('urlcustom.html',info="Custom Link Already Exists Try Using Another Keyword")     
         except:
             return render_template('urlcustom.html',info="Some Unknown Error occured")
@@ -136,9 +115,12 @@ def add_custom():
 @app.route('/url/<shorturl>')
 def redirect_function(shorturl):
     try:
-        response=requests.post(url='https://saiteja.fun/get_url_data',data={'short':shorturl})
-        if response.status_code==200:
-            return redirect(str(response.text))
+        text=""
+        with open('data.txt','r') as file:
+            text=file.read()
+        data=json.loads(text)
+        if shorturl in data.keys():
+            return redirect(str(data[shorturl]))
         else:
             return render_template_string('PageNotFound {{ errorCode }}', errorCode='404'), 404
     except:
