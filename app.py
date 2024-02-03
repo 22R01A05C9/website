@@ -45,7 +45,9 @@ def cmr():
         roll = rollno.upper()
         url = 'https://dhondi.cmrithyderabad.edu.in/sharedfiles/e0d341de643812c29a19aac35b9e7d87/studentPhotos/' + roll + '.jpg'
         response = requests.post(url=url)
-        if response.status_code == 200:
+        if response.status_code==200:
+            with open('/home/sai/website/static/images/cmrimage.jpg','wb') as file:
+                file.write(response.content)
             return render_template('cmr.html', url=url, roll=roll)
         else:
             return render_template('cmr.html',info="No Roll Number Found",roll=roll)
