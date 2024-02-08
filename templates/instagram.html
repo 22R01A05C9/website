@@ -12,10 +12,12 @@
 </head>
 
 <script>
-    function down(){
-        let link="{{download_link}}";
-        let li1=link.replaceAll("amp;","");
-        window.open(li1)
+    function hel(){
+        const inp = document.getElementById("urlinp");
+        if(inp.value) {
+            const btn = document.getElementById("b");
+            btn.classList.add("button--loading");
+        }
     }
 </script>
 
@@ -23,24 +25,27 @@
 <body>
     <div class="main">
         <div class="heading">
-            <a id="head" href="#"><p><strong>Instagram Downloader</strong></p></a>
+            <a id="head" href="/"><p><strong>Instagram Downloader</strong></p></a>
         </div>
         <div class="inp">
-            <form action="/instagram" method="post">
-                <input type="url" placeholder="Paste Link Here" name="url">
-                <button type="submit" id="search"><strong>Search</strong></button>
+            <form action="/" method="post">
+                <input type="url" placeholder="Paste Link Here" name="url" id="urlinp" required>
+                <button type="submit" id="b" class="button" onclick="hel()"><span class="button__text"><strong>Search</strong></span></button>
             </form>
         </div>
         <div class="opt">
             {% if info %}
             <p>{{info}}</p>
             {% endif %}
-            {% if op %}
-            <img src="{{image_url}}">
-            <button id="download" onclick="down()" type="button"><strong>Download Now</strong></button>
-            {% endif %}
+            <div class="preview">
+                {% if op %}
+                {% for i in range(length) %}
+                <img src="{{preview_links[i]|replace('amp;','')}}">
+                <a href="{{download_links[i]|replace('amp;','')}}"><strong>{{titles[i]}}</strong></a>
+                {% endfor %}
+                {% endif %}
+            </div>
         </div>
-
     </div>
 </body>
 </html>

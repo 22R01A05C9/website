@@ -61,7 +61,7 @@ def instagram():
         link=request.form['url']
         data=functions.get_instagram_links(link)
         if(data[0]):
-            return render_template('instagram.html',op=data[0],download_link=data[1],image_url=data[2])
+            return render_template('instagram.html',op=data[0],download_links=data[1],preview_links=data[2],length=len(data[1]),titles=data[3])
         else:
             return render_template('instagram.html',info="Video Not Available")
     else:
@@ -142,7 +142,6 @@ def search():
         return render_template('yt.html',info="Video Not Found")
     time.sleep(1)
     datamp4=functions.yt_getdatamp4(url)
-    print(datamp4['title'])
     session['title']=datamp4['title']
     return render_template('yt.html',title=datamp4['title'],mp3=datamp3['mp3'],mp4=datamp4['mp4'],link=url)
     

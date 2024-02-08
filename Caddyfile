@@ -1,7 +1,57 @@
+http://*.saiteja.fun {
+    redir https://saiteja.fun{uri}
+}
+
 http://www.saiteja.fun {
     redir https://saiteja.fun{uri}
 }
 
 http://saiteja.fun {
     reverse_proxy localhost:8000
+    log {
+        output file /home/sai/data/website.log {
+            roll_size 5gb
+        }
+        format filter {
+            wrap console
+            fields {
+                request>client_ip delete
+                request>remote_ip delete
+                request>remote_port delete
+                request>proto delete
+                request>host delete
+                request>uri delete
+                request>headers>Accept-Encoding delete
+                request>headers>X-Forwarded-Proto delete
+                request>headers>Accept delete
+                request>headers>Sec-Fetch-Site delete
+                request>headers>Referer delete
+                request>headers>If-None-Match delete
+                request>headers>Cf-Visitor delete
+                request>headers>Sec-Ch-Ua-Mobile delete
+                request>headers>If-Modified-Since delete
+                request>headers>Sec-Fetch-User delete
+                request>headers>Sec-Fetch-Dest delete
+                request>headers>Connection delete
+                request>headers>Sec-Gpc delete
+                request>headers>Priority delete
+                request>headers>Sec-Ch-Ua delete
+                request>headers>Accept-Language delete
+                request>headers>Sec-Fetch-Mode delete
+                request>headers>Cdn-Loop delete
+                request>headers>Cf-Visito delete
+                request>headers>Upgrade-Insecure-Requests delete
+                bytes_read delete
+                user_id delete
+                duration delete
+                size delete
+                resp_headers>Content-Type delete
+                resp_headers>Content-Length delete
+                resp_headers>Server delete
+                resp_headers>Etag delete
+                resp_headers>Content-Disposition delete
+                resp_headers>Cache-Control delete
+            }
+        }
+    }
 }

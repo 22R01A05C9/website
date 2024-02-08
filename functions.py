@@ -186,8 +186,25 @@ def get_instagram_links(url):
     except:
         return [0]
     op=[1]
-    op.append(soup.find_all('a')[0].get('href'))
-    op.append(soup.find_all('img')[0].get('src'))
+    unwanted_links=["https://play.google.com/store/apps/details?id=saveinsta.download.video.instagram.photo.reels.story","/"]
+    download_link=[]
+    titles=[]
+    for link in soup.find_all('a'):
+        url = link.get('href')
+        title = link.get("title")
+        if url not in unwanted_links:
+            download_link.append(url)
+            titles.append(title)   
+            
+    preview_link=[]
+    for link in soup.find_all('img'):
+        tlink = link.get('src')
+        if tlink=='/imgs/loader.gif':
+            tlink = link.get('data-src')
+        preview_link.append(str(tlink).replace("amp;",""))
+    op.append(download_link)
+    op.append(preview_link)
+    op.append(titles)
     return op
 
 def url_shortner():
