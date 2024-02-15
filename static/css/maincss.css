@@ -1,79 +1,58 @@
-.container {
+* {
     font-family: "Ubuntu", sans-serif;
     font-weight: 500;
     font-style: normal;
-}
-
-.head {
-    text-align: center;
-}
-
-.buttons {
-    display: grid;
-    grid-template-columns: repeat(1, 500px);
-    grid-template-rows: repeat(7, 60px);
-    gap: 40px;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
     background-color: #adcfeb;
-    overflow-y: scroll;
+}
+
+header {
+    position: relative;
+    top: 20px;
+    text-align: center;
+}
+
+h1 {
+    font-weight: bold;
 }
 
 .subcontainer {
+    position: relative;
+    top: 30px;
+}
+
+.buttons {
     display: flex;
-    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
 }
 
 a {
+    display: block;
     text-decoration: none;
     color: white;
-    height: 100%;
     background-color: #7c58ef;
-    font-size: 20px;
-    padding: 10px 100px;
+    font-size: large;
+    padding: 25px 0px;
     border-radius: 10px;
-    width: 500px;
+}
+
+.button {
     text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-span {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-p{
-    width: 100%;
+    display: inline;
+    width: 300px;
+    text-align: center;
 }
 
 
-@media (max-device-width: 500px){
-    a{
-        width:130px;
-    }
-    .buttons {
-        display: grid;
-        grid-template-columns: repeat(1, 360px);
-        grid-template-rows: repeat(7, 60px);
-        gap: 40px;
-    }
-    
-}
-
-@media only screen and (min-device-width:140px) and (max-device-width: 340px){
-    a{
-        width:60px;
-    }
-    .buttons{
-        display: grid;
-        grid-template-columns: repeat(1,240px);
-        grid-template-rows: repeat(7, 60px);
-        gap: 40px;
-    }
-    p{
-        width: auto;
+@media (min-device-width:550px){
+    .button {
+        width: 500px;
     }
 }

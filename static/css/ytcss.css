@@ -29,6 +29,7 @@ body {
     font-size: large;
     border-radius: 4px;
     width: 275px;
+    padding-left: 7px;
 }
 .input {
     position: relative;
