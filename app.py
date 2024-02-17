@@ -2,7 +2,7 @@ from flask import Flask,render_template,request,url_for,redirect,Response,render
 import requests
 import json,time
 import functions,sendsms
-import threading
+import threading,os
 
 app = Flask(__name__)
 app.secret_key="link"
@@ -188,10 +188,30 @@ def sending():
  
    
    
+@app.route('/files',methods=["POST","GET"])
+def files():
+    if request.method=='GET':
+        return render_template('files.html')
+    else:
+        file = request.files["file"]
+        randnum = functions.files_get_randnum()
+        functions.files_savedata(randnum,file.filename)
+        os.mkdir("static/files/"+str(randnum))
+        file.save("static/files/"+str(randnum)+"/"+file.filename)
+        threading.Thread(target=functions.files_rmdata,args=(randnum,file.filename,)).start()
+        return str(randnum)
    
    
-   
-   
+@app.route('/files/download',methods=['POST'])
+def down():
+    num = request.form['n1'] + request.form['n2'] + request.form['n3'] + request.form['n4']
+    data={}
+    with open('/home/sai/data/filesdata.txt','r') as file:
+        data=json.loads(file.read())
+    if num not in data:
+        return "Error:404--NOT-Found"
+    else:
+        return {"code":num,"name":data[num]}    
    
    
     

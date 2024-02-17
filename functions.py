@@ -1,5 +1,6 @@
-import requests,json,time,websocket,random,string
+import requests,json,websocket,random,string,os
 from bs4 import BeautifulSoup
+from time import sleep
 
 
 def yt_getdatamp4(url):
@@ -231,3 +232,52 @@ def sms_check(number):
         return [0,'none']
     else:
         return [1,"PLEASE MAKE SURE THAT NUMBER DO NOT CONTAIN ANY LETTERS"]
+    
+    
+def files_get_randnum():
+    nums={}
+    try:
+        with open("numbers.txt",'r') as file:
+            nums = json.loads(file.read())
+    except:
+        num = random.randint(1111,9999)
+        nums[str(num)]="none"
+        with open("numbers.txt",'w') as file:
+                file.write(str(nums).replace("'",'"'))
+        return num
+    while(1):
+        num = random.randint(1111,9999)
+        if num not in nums:
+            nums[str(num)]="none"
+            with open("numbers.txt",'w') as file:
+                file.write(str(nums).replace("'",'"'))
+            return num
+        
+
+def files_savedata(randnum,filename):
+    data={}
+    try:
+        with open('/home/sai/data/filesdata.txt','r') as file:
+            data=json.loads(file.read())
+    except:
+        pass
+    data[str(randnum)]=filename
+    with open('/home/sai/data/filesdata.txt','w') as file:
+        file.write(str(data).replace("'",'"'))
+
+
+def files_rmdata(randnum,filename):
+    sleep(7200)
+    data={}
+    with open('numbers.txt','r') as file:
+        data=json.loads(file.read())
+    data.pop(str(randnum))
+    with open("numbers.txt","w") as file:
+        file.write(str(data).replace("'",'"'))
+    with open('/home/sai/data/filesdata.txt','r') as file:
+        data=json.loads(file.read())
+    data.pop(str(randnum))
+    with open("/home/sai/data/filesdata.txt","w") as file:
+        file.write(str(data).replace("'",'"'))
+    os.remove('static/files/'+str(randnum)+'/'+filename)
+    os.rmdir('static/files/'+str(randnum))

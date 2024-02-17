@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/filescss.css')}}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+    <title>Files</title>
+    <link rel="shortcut icon" href="{{url_for('static',filename='images/files.png')}}" type="image/x-icon">
+</head>
+
+<script src="{{url_for('static',filename='js/files.js')}}"></script>
+
+<body>
+    <div class="container">
+        <header>
+            <p>Upload And Download Files</p>    
+        </header>
+        <div class="upload">
+            <div class="uploader">
+                <img src="{{url_for('static',filename='images/files.png')}}" alt="">
+                <form id="form"><input type="file" id="file-input" hidden name="file"></form>
+                <p>Click Here To Upload File <br>Max(4 GB)
+                </p>
+            </div>
+            <p class="info dis-none">File Size Is Greater Than 4 GB <br>Please Select Another File</p>
+            <p class="dis-none" id="status">Status</p>
+            <div class="dis-none upload-status">
+                <div class="details">
+                    <p id="file-name"></p>
+                    <p id="percent"></p>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress">
+                    </div>
+                </div>
+            </div>
+            <div class="dis-none upload-result">
+                <p>File Upload Successful <br>Your Code Is</p>
+                <p id="code">7830</p>
+                <p>Code Will Expire In 2 Hourse</p>
+            </div>
+        </div>
+
+        <div class="download">
+            <p>Or Enter The Code Below To Download</p>
+            <div class="download-input">
+                <form id="form2">
+                    <div class="code-input">
+                        <input type="number" name="n1">
+                        <input type="number" disabled name="n2">
+                        <input type="number" disabled name="n3">
+                        <input type="number" disabled name="n4">
+                    </div>
+                    <button id="down-sub-btn" type="button">Submit</button>
+                </form>
+            </div>
+            <p class="dinfo dis-none">File Not Found!</p>
+            <div class="down dis-none ">
+                <p class="fname">
+                </p>
+                <a id="a" href="" download="">Download Now</a>
+            </div>     
+        </div>
+            
+            
+
+        </div>
+        
+</body>
+</html>
