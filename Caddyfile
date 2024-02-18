@@ -1,13 +1,10 @@
-http://*.saiteja.fun {
-    redir https://saiteja.fun{uri}
+www.saiteja.fun {
+        redir https://saiteja.fun{uri}
 }
 
-http://www.saiteja.fun {
-    redir https://saiteja.fun{uri}
-}
 
-http://saiteja.fun {
-    reverse_proxy localhost:8000
+saiteja.fun {
+    reverse_proxy 127.0.0.1:8000
     log {
         output file /home/sai/data/website.log {
             roll_size 5gb
