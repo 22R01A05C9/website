@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/qrcodecss.css')}}">
+    <link rel="shortcut icon" href="{{url_for('static',filename='images/qrcodelogo.png')}}" type="image/x-icon">
+    <script src="{{url_for('static',filename='js/qrcode.js')}}"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="head">
+            <p>QR Code Generator</p>
+        </div>
+        <div class="inp-container">
+            <div class="inp">
+                <p>Enter Below Details To Continue</p>
+                <form>
+                    <input type="text" name="data" placeholder="Enter The Text Or Link" required>
+                    <div class="Background">
+                        <label for="back">Select Backgroung Color: </label>
+                        <input type="color" value="#ffffff" name="back" id="back">
+                    </div>
+                    <div class="foreground">
+                        <label for="fore">Select Foregroung Color: </label>
+                        <input type="color" name="fore" id="fore">     
+                    </div>
+                </form>
+                <button id="sub-btn" type="button">Generate</button>
+            </div>
+        </div>
+        <div class="output-container dis-none">
+            <img src="">
+            <a href="" download=>Download Image</a>
+        </div>
+    </div>
+</body>
+</html>

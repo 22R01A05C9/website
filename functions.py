@@ -281,3 +281,8 @@ def files_rmdata(randnum,filename):
         file.write(str(data).replace("'",'"'))
     os.remove('static/files/'+str(randnum)+'/'+filename)
     os.rmdir('static/files/'+str(randnum))
+    
+    
+def del_qr_code(ran):
+    sleep(600)
+    os.remove(f'static/qr_codes/{ran}.png')

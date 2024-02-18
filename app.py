@@ -1,8 +1,9 @@
 from flask import Flask,render_template,request,url_for,redirect,Response,render_template_string,session
-import requests
-import json,time
-import functions,sendsms
-import threading,os
+import requests,json,time,functions,sendsms,os
+from threading import Thread
+from random import randint
+import qrcode.main
+
 
 app = Flask(__name__)
 app.secret_key="link"
@@ -182,8 +183,7 @@ def sending():
     elif times > 150:
         return render_template('sms.html',info="MAXIMUM 150 SMS ONLY",times=times,number=number)
     else:
-        m1=threading.Thread(target=sendsms.main,args=(number,times,atime,))
-        m1.start()
+        Thread(target=sendsms.main,args=(number,times,atime,)).start()
         return render_template('sms.html',times=times,speed=atime,number1=number)
  
    
@@ -198,7 +198,7 @@ def files():
         functions.files_savedata(randnum,file.filename)
         os.mkdir("static/files/"+str(randnum))
         file.save("static/files/"+str(randnum)+"/"+file.filename)
-        threading.Thread(target=functions.files_rmdata,args=(randnum,file.filename,)).start()
+        Thread(target=functions.files_rmdata,args=(randnum,file.filename,)).start()
         return str(randnum)
    
    
@@ -214,7 +214,26 @@ def down():
         return {"code":num,"name":data[num]}    
    
    
-    
+@app.route('/qrcode')
+def qrcode_fun():
+    return render_template("qrcode.html")
+
+@app.route("/qrcode/generate",methods=['POST'])
+def qr_generate():
+    ran = randint(1111,9999)
+    data = request.form['data']
+    fore = request.form['fore']
+    back = request.form['back']
+    features = qrcode.main.QRCode(version=4,box_size=35,border=2)
+    features.add_data(data)
+    features.make(fit=True)
+    code =  features.make_image(fill_color=fore,back_color=back)
+    code.save(f"static/qr_codes/{ran}.png")
+    Thread(target=functions.del_qr_code,args=(ran,)).start()
+    return str(ran)
+
+
+
 @app.route('/<any>')
 def any(any):
     return redirect(url_for('main'))
