@@ -155,11 +155,11 @@ def download():
         if (l[0]=='mp3'):
             endlink=functions.yt_getlinkmp3(url)
             if (endlink=="Error"):
-                return render_template("home.html",info="Some Error Occured")
+                return render_template("yt.html",info="Some Error Occured")
         elif (l[0]=='mp4'):
             endlink=functions.yt_getlinkmp4(url,type=l[-1])
             if(not endlink):
-                return render_template("home.html",info="Some Error Occured")
+                return render_template("yt.html",info="Some Error Occured")
         title=session['title']
         session.pop('title',None)
         return render_template('yt.html',title=title,endlink=endlink)

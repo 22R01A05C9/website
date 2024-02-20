@@ -84,6 +84,7 @@ def yt_getlinkmp4(url,type):
     "Sec-Fetch-Site":"cross-site",
     "Sec-Gpc":"1",
     "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"}
+    link=""
     response3=requests.post(url=f"{cserver}/api/json/convert",data=data3,headers=header3)
     op3=json.loads(response3.text)
     if op3['result']=='Converting':
@@ -93,9 +94,11 @@ def yt_getlinkmp4(url,type):
         ws = websocket.WebSocket() 
         ws.connect(url4)
         while(True):
-            message=ws.recv()
             try:
+                message=ws.recv()
                 op4=json.loads(message)
+            except websocket._exceptions.WebSocketConnectionClosedException:
+                break
             except:
                 pass
             else:
