@@ -94,15 +94,19 @@ def yt_getlinkmp4(url,type):
         ws.connect(url4)
         while(True):
             message=ws.recv()
-            op4=json.loads(message)
-            if (op4['action']=='success'):
-                link=op4['url']
-                break
+            try:
+                op4=json.loads(message)
+            except:
+                pass
+            else:
+                if (op4['action']=='success'):
+                    link=op4['url']
+                    break
     else:
         link=op3['result']
     return link     
     
-def yt_getlinkmp3(url,type):
+def yt_getlinkmp3(url):
     data={"url": url,
         "ajax": "1",
         "lang": "en"
