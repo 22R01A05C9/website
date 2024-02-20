@@ -5,6 +5,7 @@ from time import sleep
 
 def yt_getdatamp4(url):
     data={}
+    data['status']=1
     data1={
     "q": url,
     "vt": "home"
@@ -19,7 +20,11 @@ def yt_getdatamp4(url):
     }
     response1=requests.post(url="https://x2mate.com/api/ajaxSearch",data=data1,headers=headers1)
     op1=json.loads(response1.text)
-    data['title']=str(op1['title'])
+    try:
+        data['title']=str(op1['title'])
+    except KeyError:
+        data['status']=0
+        return data
     data['mp4']={}
     for i in op1['links']['mp4']:
         try:
@@ -28,35 +33,6 @@ def yt_getdatamp4(url):
             break
     return data
 
-def yt_getdatamp3(url):
-    data={}
-    data['status']=1
-    data1={
-        "q": url,
-        "vt": "mp3"
-    }
-    headers1={
-        "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
-        "X-Access-Token":"ZJtmlGRrkWxhY2bK2qeh122VlG2om6OakqmQodB3n9WnoJdfk5dsX5RhlpNkUIyPnI+iy2eXZ26Ra2liYpSf",
-        "X-Auth-Token":"m6iW2sqX3V+c1JJkl5lrx2hnyJqSYmedyWqYk2vIlH2cf2uwi4LYo7V/hre/krFyh6vaqJSonMewYdhwm15qk5Y=",
-        "X-Requested-Domain":"9xbuddy.in",
-        "X-Requested-With":"xmlhttprequest"
-    }
-    response1=requests.post(url="https://x2mate.com/api/ajaxSearch",data=data1,headers=headers1)
-    op1=json.loads(response1.text)
-    try:
-        data['title']=str(op1['title'])
-    except KeyError:
-        data['status']=0
-        return data
-    else:
-        data['mp3']={}
-        for i in range(1,7):
-            try:
-                data['mp3'][op1['links']['mp3'][str(i)]['q']]=op1['links']['mp3'][str(i)]['size']
-            except:
-                break
-        return data
 
 def yt_getlinkmp4(url,type):
     data={}
@@ -127,46 +103,27 @@ def yt_getlinkmp4(url,type):
     return link     
     
 def yt_getlinkmp3(url,type):
-    data={}
-    data1={
-        "q": url,
-        "vt": "mp3"
+    data={"url": url,
+        "ajax": "1",
+        "lang": "en"
     }
-    headers1={
-        "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
-        "X-Access-Token":"ZJtmlGRrkWxhY2bK2qeh122VlG2om6OakqmQodB3n9WnoJdfk5dsX5RhlpNkUIyPnI+iy2eXZ26Ra2liYpSf",
-        "X-Auth-Token":"m6iW2sqX3V+c1JJkl5lrx2hnyJqSYmedyWqYk2vIlH2cf2uwi4LYo7V/hre/krFyh6vaqJSonMewYdhwm15qk5Y=",
-        "X-Requested-Domain":"9xbuddy.in",
-        "X-Requested-With":"xmlhttprequest"
+    res1 = requests.post("https://y2mate.com.co/mates/en/analyze/ajax?retry=undefined&platform=youtube",data=data)
+    try:
+        id = res1.text.split("var k_data_vid = ")[1].split('\"')[1].replace('\\',"")
+        title = res1.text.split("var k_data_vtitle =")[1].split('\"')[1].replace('\\',"")
+    except IndexError:
+        return "Error"
+    data2 ={
+        "platform": "youtube",
+        "url": url,
+        "title": title,
+        "id": id,
+        "ext": "mp3",
+        "note": "128k",
+        "format": "128k"
     }
-    response1=requests.post(url="https://x2mate.com/api/ajaxSearch",data=data1,headers=headers1)
-    op1=json.loads(response1.text)
-    data['vid']=str(op1['vid'])
-    data['title']=str(op1['title'])
-    data['token']=str(op1['token'])
-    data['timeexpire']=str(op1['timeExpires'])
-    data2={
-    "v_id": data['vid'],
-    "ftype":"mp3",
-    "fquality": type,
-    "token": data['token'],
-    "timeExpire": data['timeexpire'],
-    "client": "x2mate.com"
-    }
-    headers2={
-        "Sec-Ch-Ua-Mobile":"?0",
-        "Sec-Ch-Ua-Platform":"Windows",
-        "Sec-Fetch-Dest":"empty",
-        "Sec-Fetch-Mode":"cors",
-        "Sec-Fetch-Site":"cross-site", 
-        "Sec-Gpc":"1",
-        "User-Agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
-        "X-Requested-Key":"de0cfuirtgf67a"
-    }
-    response2=requests.post(url="https://backend.svcenter.xyz/api/convert-by-45fc4be8916916ba3b8d61dd6e0d6994",data=data2,headers=headers2)
-    op2=json.loads(response2.text)
-    link=op2['d_url']
-    return link
+    download_link = json.loads(requests.post("https://nearbypro.www-2048.com/mates/en/convert?id="+id,data=data2).text)['downloadUrlX']
+    return download_link
 
 
 def get_instagram_links(url):

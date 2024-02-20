@@ -136,13 +136,11 @@ def home():
 def search():
     url=request.form['link']
     session['link']=url
-    datamp3=functions.yt_getdatamp3(url)
-    if (datamp3['status']==0):
-        return render_template('yt.html',info="Video Not Found")
-    time.sleep(1)
     datamp4=functions.yt_getdatamp4(url)
+    if (datamp4['status']==0):
+        return render_template('yt.html',info="Video Not Found")
     session['title']=datamp4['title']
-    return render_template('yt.html',title=datamp4['title'],mp3=datamp3['mp3'],mp4=datamp4['mp4'],link=url)
+    return render_template('yt.html',title=datamp4['title'],mp4=datamp4['mp4'],link=url)
     
 @app.route('/yt/download',methods=['POST'])
 def download():
@@ -155,9 +153,13 @@ def download():
         type1=request.form['opti']
         l=type1.split(',')
         if (l[0]=='mp3'):
-            endlink=functions.yt_getlinkmp3(url,type=l[-1])
+            endlink=functions.yt_getlinkmp3(url)
+            if (endlink=="Error"):
+                return render_template("home.html",info="Some Error Occured")
         elif (l[0]=='mp4'):
             endlink=functions.yt_getlinkmp4(url,type=l[-1])
+            if(not endlink):
+                return render_template("home.html",info="Some Error Occured")
         title=session['title']
         session.pop('title',None)
         return render_template('yt.html',title=title,endlink=endlink)

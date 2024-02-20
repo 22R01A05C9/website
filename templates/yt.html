@@ -42,15 +42,13 @@
                 <h3>Title:</h3>
                 <h4>{{title}}</h4>
             </div>
-            {% if mp3 %}
+            {% if mp4 %}
             <div class="options">
                 <h3 class="head">Select Quality And Type</h3>
                 <form action="/yt/download" id="opt" method="post">
                     <select name="opti"required>
                         <optgroup label="Audio MP3"></optgroup>
-                        {% for i in mp3 %}
-                        <option value="mp3,{{i.replace('kbps','')}}">{{i}}({{mp3[i]}})</option>
-                        {% endfor %}
+                        <option value="mp3,128kbps">128kbps</option>
                         <optgroup label="Video MP4"></optgroup>
                         {% for i in mp4 %}
                         <option value="mp4,{{i}}">{{i}}({{mp4[i]}})</option>
