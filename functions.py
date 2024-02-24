@@ -114,10 +114,34 @@ def yt_getlinkmp3(url):
     rand = random.randint(1111,9999)
     y=YouTube(url)
     mapping_table = str.maketrans({" ":"_","|":"","/":"","\\":"",":":"","*":"","?":"","<":"",'"':"",">":""})
-    y.streams.get_audio_only().download(output_path="/home/sai/website/static/files/"+str(rand),filename=y.title.translate(mapping_table)+".mp3")
-    path="/home/sai/website/static/files/"+str(rand)+"/"+y.title.translate(mapping_table)+".mp3"
-    Thread(target=delete_yt_audio,args=(path,rand,)).start()
-    return "/static/files/"+str(rand)+"/"+y.title.translate(mapping_table)+".mp3"
+    try:
+        y.streams.get_audio_only().download(output_path="/home/sai/website/static/files/"+str(rand),filename=y.title.translate(mapping_table)+".mp3")
+    except:
+        data={"url": url,
+        "ajax": "1",
+        "lang": "en"
+        }
+        res1 = requests.post("https://y2mate.com.co/mates/en/analyze/ajax?retry=undefined&platform=youtube",data=data)
+        try:
+            id = res1.text.split("var k_data_vid = ")[1].split('\"')[1].replace('\\',"")
+            title = res1.text.split("var k_data_vtitle =")[1].split('\"')[1].replace('\\',"")
+        except IndexError:
+            return "Error"
+        data2 ={
+            "platform": "youtube",
+            "url": url,
+            "title": title,
+            "id": id,
+            "ext": "mp3",
+            "note": "128k",
+            "format": "128k"
+        }
+        download_link = json.loads(requests.post("https://nearbypro.www-2048.com/mates/en/convert?id="+id,data=data2).text)['downloadUrlX']
+        return download_link
+    else:
+        path="/home/sai/website/static/files/"+str(rand)+"/"+y.title.translate(mapping_table)+".mp3"
+        Thread(target=delete_yt_audio,args=(path,rand,)).start()
+        return "/static/files/"+str(rand)+"/"+y.title.translate(mapping_table)+".mp3"
 
     
 def delete_yt_audio(path,rand):
