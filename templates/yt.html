@@ -18,7 +18,6 @@
     const link='{{endlink}}';
     const link1=link.replaceAll('amp;','');
     function down(){
-        console.log(link1);
         window.open(link1);
     }
 </script>
@@ -48,7 +47,7 @@
                 <form action="/yt/download" id="opt" method="post">
                     <select name="opti"required>
                         <optgroup label="Audio MP3"></optgroup>
-                        <option value="mp3,128kbps">128kbps</option>
+                        <option value="mp3,128kbps">MP3 128kbps</option>
                         <optgroup label="Video MP4"></optgroup>
                         {% for i in mp4 %}
                         <option value="mp4,{{i}}">{{i}}({{mp4[i]}})</option>
@@ -62,7 +61,7 @@
                 {% endif %}
                 </form>
                 {% if endlink %}
-                <button onclick="down()" class="download" type="button">Download {{type}} Now</button>
+                <a href="{{endlink | replace('amp;','')}}" download="" class="download" type="button">Download {{type}} Now</a>
                 {% endif %}
             </div>
         </div>

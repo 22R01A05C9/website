@@ -1,7 +1,8 @@
 import requests,json,websocket,random,string,os
 from bs4 import BeautifulSoup
 from time import sleep
-
+from pytube import YouTube
+from threading import Thread
 
 def yt_getdatamp4(url):
     data={}
@@ -110,28 +111,19 @@ def yt_getlinkmp4(url,type):
     return link     
     
 def yt_getlinkmp3(url):
-    data={"url": url,
-        "ajax": "1",
-        "lang": "en"
-    }
-    res1 = requests.post("https://y2mate.com.co/mates/en/analyze/ajax?retry=undefined&platform=youtube",data=data)
-    try:
-        id = res1.text.split("var k_data_vid = ")[1].split('\"')[1].replace('\\',"")
-        title = res1.text.split("var k_data_vtitle =")[1].split('\"')[1].replace('\\',"")
-    except IndexError:
-        return "Error"
-    data2 ={
-        "platform": "youtube",
-        "url": url,
-        "title": title,
-        "id": id,
-        "ext": "mp3",
-        "note": "128k",
-        "format": "128k"
-    }
-    download_link = json.loads(requests.post("https://nearbypro.www-2048.com/mates/en/convert?id="+id,data=data2).text)['downloadUrlX']
-    return download_link
+    rand = random.randint(1111,9999)
+    y=YouTube(url)
+    mapping_table = str.maketrans({" ":"_","|":"","/":"","\\":"",":":"","*":"","?":"","<":"",'"':"",">":""})
+    y.streams.get_audio_only().download(output_path="/home/sai/website/static/files/"+str(rand),filename=y.title.translate(mapping_table)+".mp3")
+    path="/home/sai/website/static/files/"+str(rand)+"/"+y.title.translate(mapping_table)+".mp3"
+    Thread(target=delete_yt_audio,args=(path,rand,)).start()
+    return "/static/files/"+str(rand)+"/"+y.title.translate(mapping_table)+".mp3"
 
+    
+def delete_yt_audio(path,rand):
+    sleep(600)
+    os.remove(path)
+    os.rmdir("/home/sai/website/static/files/"+str(rand))
 
 def get_instagram_links(url):
     headers={
@@ -233,7 +225,7 @@ def files_savedata(randnum,filename):
 def files_rmdata(randnum,filename):
     sleep(7200)
     data={}
-    with open('numbers.txt','r') as file:
+    with open('/home/sai/data/filesnumbers.txt','r') as file:
         data=json.loads(file.read())
     data.pop(str(randnum))
     with open("numbers.txt","w") as file:

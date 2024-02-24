@@ -110,6 +110,8 @@ body {
     color: black;
 }
 .download {
+    text-decoration: none;
+    color: white;
     padding: 8px;
     border-radius: 5px;
     border: none;
