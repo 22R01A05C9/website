@@ -1,5 +1,6 @@
-from flask import Flask,render_template,request,url_for,redirect,Response,render_template_string,session
-import requests,json,time,functions,sendsms,os
+from flask import Flask,render_template,request,url_for,redirect,render_template_string,session
+from werkzeug.utils import secure_filename
+import requests,json,functions,sendsms,os
 from threading import Thread
 from random import randint
 import qrcode.main
@@ -197,10 +198,10 @@ def files():
     else:
         file = request.files["file"]
         randnum = functions.files_get_randnum()
-        functions.files_savedata(randnum,file.filename)
+        functions.files_savedata(randnum,secure_filename(file.filename))
         os.mkdir("static/files/"+str(randnum))
-        file.save("static/files/"+str(randnum)+"/"+file.filename)
-        Thread(target=functions.files_rmdata,args=(randnum,file.filename,)).start()
+        file.save("static/files/"+str(randnum)+"/"+secure_filename(file.filename))
+        Thread(target=functions.files_rmdata,args=(randnum,secure_filename(file.filename),)).start()
         return str(randnum)
    
    

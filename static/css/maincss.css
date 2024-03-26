@@ -5,6 +5,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -36,8 +37,9 @@ h1 {
 a {
     display: block;
     text-decoration: none;
-    color: white;
-    background-color: #7c58ef;
+    color: black;
+    box-shadow: 0px 0px 12px 4px #6900d14f;
+    background-color: #8a51ff21;
     font-size: large;
     padding: 22px 0px;
     border-radius: 10px;

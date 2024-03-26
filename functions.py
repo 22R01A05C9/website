@@ -217,19 +217,19 @@ def sms_check(number):
 def files_get_randnum():
     nums={}
     try:
-        with open("numbers.txt",'r') as file:
+        with open("/home/sai/data/filesnumbers.txt",'r') as file:
             nums = json.loads(file.read())
     except:
         num = random.randint(1111,9999)
         nums[str(num)]="none"
-        with open("numbers.txt",'w') as file:
+        with open("/home/sai/data/filesnumbers.txt",'w') as file:
                 file.write(str(nums).replace("'",'"'))
         return num
     while(1):
         num = random.randint(1111,9999)
         if num not in nums:
             nums[str(num)]="none"
-            with open("numbers.txt",'w') as file:
+            with open("/home/sai/data/filesnumbers.txt",'w') as file:
                 file.write(str(nums).replace("'",'"'))
             return num
         
@@ -252,7 +252,7 @@ def files_rmdata(randnum,filename):
     with open('/home/sai/data/filesnumbers.txt','r') as file:
         data=json.loads(file.read())
     data.pop(str(randnum))
-    with open("numbers.txt","w") as file:
+    with open("/home/sai/data/filesnumbers.txt","w") as file:
         file.write(str(data).replace("'",'"'))
     with open('/home/sai/data/filesdata.txt','r') as file:
         data=json.loads(file.read())
